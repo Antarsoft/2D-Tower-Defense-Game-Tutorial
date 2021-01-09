@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         GetComponent<HealthSystem>().Init();
+        GetComponent<CurrencySystem>().Init();
     }    
 
 }

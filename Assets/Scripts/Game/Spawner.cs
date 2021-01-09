@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
-    public SpriteRenderer testSprite;
-
     //list of towers (prefabs) that will instatiate
     public List<GameObject> towersPrefabs;
     //Transform of the spawning towers (Root Object)
