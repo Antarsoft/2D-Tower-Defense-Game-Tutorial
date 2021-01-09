@@ -70,7 +70,7 @@ public class Spawner : MonoBehaviour
         {
             case 0: return towersPrefabs[id].GetComponent<Tower_Pink>().cost;
             case 1: return towersPrefabs[id].GetComponent<Tower_Mask>().cost;
-            //case 2: return towersPrefabs[0].GetComponent<Tower_Ninja>().cost;  
+            case 2: return towersPrefabs[id].GetComponent<Tower_Ninja>().cost;  
             default:return -1;
         }
     }
