@@ -45,11 +45,33 @@ public class Spawner : MonoBehaviour
             //check if we can spawn in that cell (collider)
             if(spawnTilemap.GetColliderType(cellPosDefault)== Tile.ColliderType.Sprite)
             {
-                //Spawn the tower
-                SpawnTower(cellPosCentered);
-                //Disable the collider
-                spawnTilemap.SetColliderType(cellPosDefault,Tile.ColliderType.None);                
+                int towerCost = TowerCost();
+                //Check if currency is enough to spawn
+                if(GameManager.instance.currency.EnoughCurrency(TowerCost()))
+                {
+                    //Use the amount of cost from the currency available
+                    GameManager.instance.currency.Use(towerCost);
+                    //Spawn the tower
+                    SpawnTower(cellPosCentered);
+                    //Disable the collider
+                    spawnTilemap.SetColliderType(cellPosDefault, Tile.ColliderType.None);
+                }
+                else
+                {
+                    Debug.Log("Not Enough Currency");
+                }                               
             }                                  
+        }
+    }
+
+    int TowerCost()
+    {
+        switch(spawnID)
+        {
+            case 0: return towersPrefabs[0].GetComponent<Tower_Pink>().cost;
+            //case 1: return towersPrefabs[0].GetComponent<Tower_Mask>().cost;
+            //case 2: return towersPrefabs[0].GetComponent<Tower_Ninja>().cost;  
+            default:return -1;
         }
     }
 

@@ -40,7 +40,7 @@ public class CurrencySystem : MonoBehaviour
         }
     }
     //Check availability of currency
-    bool EnoughCurrency(int val)
+    public bool EnoughCurrency(int val)
     {
         //Check if the val is equal or more than currency
         if (val <= currency)
