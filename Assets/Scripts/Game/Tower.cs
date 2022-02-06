@@ -13,7 +13,7 @@ public class Tower : MonoBehaviour
     }
 
     //Lose Health
-    public virtual void LoseHealth(int amount)
+    public virtual bool LoseHealth(int amount)
     {
         //health = health - amount
         health-= amount;
@@ -21,7 +21,9 @@ public class Tower : MonoBehaviour
         if (health <= 0)
         {
             Die();
+            return true;
         }
+        return false;
     }
     //Die
     protected virtual void Die()

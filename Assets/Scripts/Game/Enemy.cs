@@ -7,15 +7,44 @@ public class Enemy : MonoBehaviour
     public int health,attackPower;
     public float moveSpeed;
 
+    public Animator animator;
+    public float attackInterval;
+    Coroutine attackOrder;
+    Tower detectedTower;
+
     void Update()
     {
-        Move();
+        if(!detectedTower)
+        {
+            Move();
+        }        
+    }
+
+    IEnumerator Attack()
+    {
+        animator.Play("Attack",0,0);
+        //Wait attackInterval 
+        yield return new WaitForSeconds(attackInterval);
+        //Attack Again
+        attackOrder = StartCoroutine(Attack());
     }
 
     //Moving forward
     void Move()
     {
+        animator.Play("Move");
         transform.Translate(-transform.right*moveSpeed*Time.deltaTime);
+    }
+
+    public void InflictDamage()
+    {
+        bool towerDied = detectedTower.LoseHealth(attackPower);
+
+        if (towerDied)
+        {
+            detectedTower = null;
+            StopCoroutine(attackOrder);
+        }
     }
 
     //Lose health
@@ -39,4 +68,16 @@ public class Enemy : MonoBehaviour
         //Revert to default color
         GetComponent<SpriteRenderer>().color=Color.white;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (detectedTower)
+            return;
+
+        if(collision.tag == "Tower")
+        {
+            detectedTower = collision.GetComponent<Tower>();
+            attackOrder = StartCoroutine(Attack());
+        }   
+    }    
 }
