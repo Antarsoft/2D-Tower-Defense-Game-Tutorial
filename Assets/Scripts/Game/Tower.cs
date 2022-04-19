@@ -6,10 +6,17 @@ public class Tower : MonoBehaviour
 {
     public int health;
     public int cost;
+    private Vector3Int cellPosition;
+
 
     protected virtual void Start()
     {
         Debug.Log("BASE TOWER");
+    }
+
+    public virtual void Init(Vector3Int cellPos)
+    {
+        cellPosition = cellPos;
     }
 
     //Lose Health
@@ -29,6 +36,7 @@ public class Tower : MonoBehaviour
     protected virtual void Die()
     {
         Debug.Log("Tower is dead");
+        FindObjectOfType<Spawner>().RevertCellState(cellPosition);
         Destroy(gameObject);
     }
 }
